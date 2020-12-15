@@ -1,22 +1,20 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
-const { beforeFindAfterExpandIncludeAll } = require('../../models/Tag');
+
 
 // The `/api/categories` endpoint
 
-router.get('/', async (req, res) => {
-  try {
-    const categoryData = await Category.findAll({
-      include: [{ model: Product}],
-    });
-    res.status(200).json(categoryData);
-    
-  } catch (error) {
-    res.status(500).json(err);
-    
-  }
   // find all categories
   // be sure to include its associated Products
+router.get('/', async (req, res) => {
+  try {
+      const categoryData = await Category.findAll({
+        include: [{ model: Product}],
+    });
+      res.status(200).json(categoryData);
+  } catch (error) {
+      res.status(500).json(err);
+  }
 });
 
 router.get('/:id', async (req, res) => {
@@ -35,7 +33,16 @@ res.status(200).json(categoryData);
     res.status(500).json(err);
   }
 });
-router.post('/', (req, res) => {
+
+
+router.post('/', async (req, res) => {
+  try {
+    const createCategory = await Category.create(req.body);
+    res.status(200).json(createCategory);
+  } catch (error) {
+    res.status(400).json(error)
+    
+  }
   // create a new category
 });
 
@@ -44,6 +51,18 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+  try {
+    const categoryData = await Category.destroy({
+      where: { id: req.params.id }
+    });
+    if (!categoryData) {
+      res.status(404).json({ message: 'No trip with this id!' });
+      return;
+    }
+    res.status(200).json(categoryData);
+  } catch (error) {
+    res.status(500).json(error);
+  }
   // delete a category by its `id` value
 });
 
