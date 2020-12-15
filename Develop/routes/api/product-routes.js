@@ -4,19 +4,43 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // The `/api/products` endpoint
 
 // get all products
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  try {
+    const allProducts = await Product.findAll();
+    res.status(200).json(allProducts);
+  } catch (error) {
+    res.status(200).json(err);
+    
+  }
   // find all products
   // be sure to include its associated Category and Tag data
 });
 
 // get one product
 router.get('/:id', (req, res) => {
+  try {
+    const oneProduct = await Product.findByPk(req.params.id, {
+      include: [{ model: Category, through: Tag, as: 'product_tag'}]
+    });
+    if (!oneProduct) {
+      
+    }
+  } catch (error) {
+    
+  }
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
 
 // create new product
 router.post('/', (req, res) => {
+  // try {
+  //   const productData = await Product.create(req.body);
+  //   res.status(200).json(locationData);
+  // } catch (error) {
+  //   res.status(400).json(err)
+    
+  // } wtf is this assignment. fix these comments and the README ffs.
   /* req.body should look like this...
     {
       product_name: "Basketball",
