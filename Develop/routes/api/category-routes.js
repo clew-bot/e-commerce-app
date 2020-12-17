@@ -51,7 +51,7 @@ router.put('/:id', async (req, res) => {
   const updateCategory = await Category.update(req.body, {
     where: {
       id: req.params.id
-  }}),
+  }})
     if (!updateCategory) {
       res.status(404).json({ message: "There is no category found!"})
     }

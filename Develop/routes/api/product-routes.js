@@ -44,7 +44,9 @@ router.post('/', (req, res) => {
   // } catch (error) {
   //   res.status(400).json(err)
     
-  // } wtf is this assignment. fix these comments and the README ffs.
+  // } wtf is this assignment. fix these comments and the README ffs.//
+
+
   /* req.body should look like this...
     {
       product_name: "Basketball",
